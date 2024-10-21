@@ -3,6 +3,7 @@ import time
 import shared.Interfaces as interfacces
 from shared import move_direction
 from shared.Map import Map
+from shared.event_type import event_type
 # printing the start time
 
 #import console.ConsoleSnake
@@ -24,9 +25,13 @@ class Game:
     def detect_colisions(self):
         snake_tip =  self.state.snakePos[0]
         if  len(self.state.snakePos) != len(set(self.state.snakePos))  :
-            print("error ") #self hit
+            print("self hit event ") #self hit
+            self.state.events.clear()
+            self.state.events.append(event_type.SELF_HIT) 
         if snake_tip[0] < 0 or snake_tip[1] < 0 or snake_tip[0] >= self.map.width  or snake_tip[1] >= self.map.height:
-            print("error ")               
+            print("wall hit event")    
+            self.state.events.clear()
+            self.state.events.append(event_type.WALL_HIT)            
     def makeMove(self):
         direction = self.input_collector.GetDirection()
         snake_tip = self.state.snakePos[0]

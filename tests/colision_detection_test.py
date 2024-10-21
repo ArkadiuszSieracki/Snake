@@ -30,27 +30,48 @@ class TestGameModule(GameModule):
 
 class TestGame(unittest.TestCase):
     def setUp(self):
-        print("ABC")
         self.injector = Injector([TestGameModule()])
     
     def test_game_initialization(self):
-        print("BCD..")
         game_instance = self.injector.get(Game.Game)
+        state = self.injector.get(GameState.GameState)
+        map = self.injector.get(Map)
+        map.height = 10
+        map.width = 10
+        
         #raise Exception("AAAAAAAA")
         self.assertIsInstance(game_instance.map, Mock)
         self.assertIsInstance(game_instance.renderer, Mock)
         self.assertIsInstance(game_instance.state, Mock)
         self.assertIsInstance(game_instance.input_collector, Mock)
-        
-    def test_game_initialization1(self):
-        print("BCD..")
-        # game_instance = self.injector.get(Game)
-        #raise Exception("AAAAAAAA")
-        # self.assertIsInstance(game_instance.map, Mock)
-        # self.assertIsInstance(game_instance.renderer, Mock)
-        # self.assertIsInstance(game_instance.state, Mock)
-        # self.assertIsInstance(game_instance.input_collector, Mock)        
-
+     
+    def test_colision_happens(self):
+       print("Rosie")
+       game_instance = self.injector.get(Game.Game)
+       state = self.injector.get(GameState.GameState)
+       map = self.injector.get(Map)
+       map.height = 10
+       map.width = 10  
+       state.snakePos = []
+       state.snakePos.append((10,10))
+       state.events = []
+       game_instance.detect_colisions()
+       from shared.event_type import event_type
+       self.assertIn(event_type.WALL_HIT, state.events)
+    def test_self_colision_happens(self):
+       print("Rosie")
+       game_instance = self.injector.get(Game.Game)
+       state = self.injector.get(GameState.GameState)
+       map = self.injector.get(Map)
+       map.height = 10
+       map.width = 10  
+       state.snakePos = []
+       state.snakePos.append((1,1))
+       state.snakePos.append((1,1))
+       state.events = []
+       game_instance.detect_colisions()
+       from shared.event_type import event_type
+       self.assertIn(event_type.SELF_HIT, state.events)
 
 if __name__ == '__main__':
     unittest.main()
