@@ -1,16 +1,16 @@
-from busines.GameState import GameState  as GS
+from shared.GameState import GameState  as GS
 import time
 import shared.Interfaces as interfacces
 from shared import move_direction
-from busines.Map import Map
+from shared.Map import Map
 # printing the start time
 
-import console.ConsoleSnake
+#import console.ConsoleSnake
 # using sleep() to hault the code execution
 from injector import inject
 class Game:
     @inject
-    def __init__(self, map: Map, renderer: interfacces.Renderer,state: GS , input_collector:console.ConsoleSnake.ConsoleInputCollector) -> None:
+    def __init__(self, map: Map, renderer: interfacces.Renderer,state: GS , input_collector:interfacces.InputController) -> None:
         self.map = map
         self.renderer = renderer
         self.state = state

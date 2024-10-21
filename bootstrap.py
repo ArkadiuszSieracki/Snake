@@ -1,12 +1,12 @@
 from injector import Injector, Module, Binder, singleton
-from  busines.GamesSettings import GameSettings
-from busines.Map import Map, MapFactory
+from  shared.GamesSettings import GameSettings
+from shared.Map import Map, MapFactory
 import busines.Game as Gam
-from busines.GameState import GameState  as GS
+from shared.GameState import GameState  as GS
 from console.ConsoleSnake import ConsoleRenderer as Csr
 import console
 import console.ConsoleSnake
-from shared.Interfaces import Renderer
+from shared.Interfaces import Renderer, InputController
 # DI Container
 # class Container(containers.DeclarativeContainer):
 #     config = providers.Configuration()
@@ -54,5 +54,5 @@ class GameModule(Module):
         binder.bind(Map, to=lambda: binder.injector.get(MapFactory).getMap(), scope=singleton)
         binder.bind(Renderer, to=Csr, scope=singleton)  # Ensure ConsoleRenderer is used for Renderer
         binder.bind(GS, to=GS, scope=singleton)
-        binder.bind(console.ConsoleSnake.ConsoleInputCollector, to=console.ConsoleSnake.ConsoleInputCollector, scope=singleton)
+        binder.bind(InputController, to=console.ConsoleSnake.ConsoleInputCollector, scope=singleton)
         binder.bind(Gam.Game, to=Gam.Game, scope=singleton)

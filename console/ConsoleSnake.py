@@ -1,10 +1,28 @@
 import unicurses
 
 from shared.Interfaces import Renderer, InputController
-from busines.GameState import GameState  as GS
+from shared.GameState import GameState  as GS
 # Initialize the screen
 class ConsoleRenderer(Renderer):
+    
     def __init__(self) -> None:
+        stdscr = unicurses.initscr()    
+        unicurses.clear()
+        unicurses.cbreak()
+        unicurses.noecho()
+        unicurses.keypad(stdscr, True)
+        
+        # Move the cursor to row 10, column 30 and write a character
+        
+        
+        # Refresh the screen to update the display
+        unicurses.refresh()
+        
+        # Wait for user input before ending the session
+        #unicurses.getch()
+        
+        # End the window session
+        #unicurses.endwin()
         self.menuWidth = 10
         self.menuTop = 1 
         self.borderwidth =1
@@ -64,20 +82,3 @@ class ConsoleInputCollector(InputController):
             
     def GetDirection(self):
        return self.move_direction
-stdscr = unicurses.initscr()    
-unicurses.clear()
-unicurses.cbreak()
-unicurses.noecho()
-unicurses.keypad(stdscr, True)
-
-# Move the cursor to row 10, column 30 and write a character
-
-
-# Refresh the screen to update the display
-unicurses.refresh()
-
-# Wait for user input before ending the session
-#unicurses.getch()
-
-# End the window session
-#unicurses.endwin()

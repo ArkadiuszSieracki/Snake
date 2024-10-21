@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from busines.GameState import GameState  as GS
+from shared.GameState import GameState  as GS
 class Renderer:
     @abstractmethod
     def renderFrame(self,map, state:GS):

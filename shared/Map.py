@@ -3,7 +3,7 @@ class Map:
         print(f"width {width}, height {height}")
         self.width = width
         self.height = height
-from busines.GamesSettings  import GameSettings  
+from shared.GamesSettings  import GameSettings  
 from injector import inject
 class MapFactory():
     @inject

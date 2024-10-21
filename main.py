@@ -1,6 +1,6 @@
-import busines.Map as MMap
+import shared.Map as MMap
 import busines.Game as Gam
-from busines.GameState import GameState  as GS
+from shared.GameState import GameState  as GS
 from console.ConsoleSnake import ConsoleRenderer as Csr
 import console
 import console.ConsoleSnake
