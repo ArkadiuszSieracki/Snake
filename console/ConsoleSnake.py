@@ -2,6 +2,7 @@ import unicurses
 
 from shared.Interfaces import Renderer, InputController
 from shared.GameState import GameState  as GS
+from datetime import datetime
 # Initialize the screen
 class ConsoleRenderer(Renderer):
     
@@ -42,11 +43,24 @@ class ConsoleRenderer(Renderer):
         self.renderMap(map)
         self.renderMenu(map)
         self.renderSnake(state)
-        
+        self.renderEvents(state)
         unicurses.refresh()  
     def renderSnake(self, state:GS ):    
         for i,j in state.snakePos:
-             self.renderRectangle(1, 1  ,3* (2 * self.borderwidth)+self.menuWidth+i, j + (2 * self.borderwidth), "#") 
+           ti,tj = self.translate((i,j))
+           self.renderRectangle(1, 1  ,ti,tj, "#") 
+    def translate(self, cord:tuple[int,int]):
+       return (1 * self.borderwidth)+self.menuWidth+cord[0], cord[1] + self.borderwidth + self.menuTop
+    def renderEvents(self, state:GS ):    
+       from shared.event_type import event_type
+       if event_type.SELF_HIT in state.events:
+          from_hit = int((state.events[event_type.SELF_HIT].timestamp     - datetime.now()).total_seconds()) * -1
+          for i in range(from_hit):
+             snakeHead =state.getSnakeHead()
+             snakeHeadT  = self.translate(snakeHead)
+             drawX = max(0, snakeHeadT[0]-from_hit)
+             drawY = max(0, snakeHeadT[1]-from_hit)
+             self.renderRectangle(i*2+1,i*2+1,drawX ,drawY, "O" )             
     def renderMenu(self,map):
         frame_height = map.height + (2 * self.borderwidth)
         self.renderRectangle(self.menuWidth, frame_height  , 0, self.menuTop)    

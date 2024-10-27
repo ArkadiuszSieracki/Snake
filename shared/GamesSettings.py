@@ -3,4 +3,4 @@ class GameSettings:
         self.map_width = 40
         self.map_height = 10
         self.lives = 3
-        
+        self.frames_per_second = 2
