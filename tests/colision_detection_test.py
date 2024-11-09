@@ -54,10 +54,11 @@ class TestGame(unittest.TestCase):
        map.width = 10  
        state.snakePos = []
        state.snakePos.append((10,10))
-       state.events = []
+       state.events = {}
        game_instance.detect_colisions()
        from shared.event_type import event_type
-       self.assertIn(event_type.WALL_HIT, state.events)
+       isAny =  any(event.event_type == event_type.WALL_HIT for event in state.events.values())
+       self.assertTrue(isAny, "We should have found event wall hit")
     def test_self_colision_happens(self):
        print("Rosie")
        game_instance = self.injector.get(Game.Game)
@@ -68,10 +69,12 @@ class TestGame(unittest.TestCase):
        state.snakePos = []
        state.snakePos.append((1,1))
        state.snakePos.append((1,1))
-       state.events = []
+       state.events = {}
        game_instance.detect_colisions()
        from shared.event_type import event_type
-       self.assertIn(event_type.SELF_HIT, state.events)
+       isAny = any(o.event_type == event_type.SELF_HIT for o in state.events.values())
+       
+       self.assertTrue(isAny, "self hit should be detected")
 
 if __name__ == '__main__':
     unittest.main()

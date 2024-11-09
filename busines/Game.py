@@ -43,7 +43,8 @@ class Game:
         if snake_tip[0] < 0 or snake_tip[1] < 0 or snake_tip[0] >= self.map.width  or snake_tip[1] >= self.map.height:
             print("wall hit event")    
             self.state.events.clear()
-            self.state.events[event_type.WALL_HIT] = game_event(event_type.WALL_HIT, datetime.now())           
+            newEvent = game_event(event_type.WALL_HIT, datetime.now())
+            self.state.events[event_type.WALL_HIT] =    newEvent        
     def makeMove(self):
         direction = self.input_collector.GetDirection()
         snake_tip = self.state.snakePos[0]
