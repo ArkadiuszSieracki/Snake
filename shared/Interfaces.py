@@ -11,3 +11,12 @@ class InputController:
     @abstractmethod
     def GetDirection(self):
         pass
+    @abstractmethod
+    def GetLastKey(self):
+        pass
+    @abstractmethod
+    def Reset(self):
+        pass
+    @abstractmethod
+    def Stop(self):
+        pass
