@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: promtail
+  labels:
+    app: promtail
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: promtail
+  template:
+    metadata:
+      labels:
+        app: promtail
+    spec:
+      containers:
+        - name: promtail
+          image: grafana/promtail:latest
+          args:
+            - "-config.file=/etc/promtail/promtail.yaml"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/promtail/
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+      volumes:
+        - name: config
+          configMap:
+            name: promtail-config
